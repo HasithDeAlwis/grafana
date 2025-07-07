@@ -65,7 +65,7 @@ export class UserOrgs extends PureComponent<Props, State> {
           <Trans i18nKey="admin.user-orgs.title">Organizations</Trans>
         </h3>
         <Stack gap={1.5} direction="column">
-          <table className="filter-table form-inline">
+          <table className="filter-table form-inline" style={{ borderSpacing: '0 3rem' }}>
             <tbody>
               {orgs.map((org, index) => (
                 <OrgRow
@@ -125,6 +125,12 @@ const getOrgRowStyles = stylesFactory((theme: GrafanaTheme2) => {
     rolePicker: css({
       flex: 'auto',
       marginRight: theme.spacing(1),
+    }),
+    roleCell: css({
+      marginRight: theme.spacing(3),
+    }),
+    actionCell: css({
+      borderSpacing: `0 ${theme.spacing(3)}`,
     }),
   };
 });
@@ -218,13 +224,13 @@ class UnThemedOrgRow extends PureComponent<OrgRowProps> {
         ) : (
           <>
             {isChangingRole ? (
-              <td>
+              <td className={cx('width-25', styles.roleCell)}>
                 <OrgRolePicker inputId={inputId} value={currentRole} onChange={this.onOrgRoleChange} autoFocus />
               </td>
             ) : (
-              <td className="width-25">{org.role}</td>
+              <td className={cx('width-25', styles.roleCell)}>{org.role}</td>
             )}
-            <td colSpan={1}>
+            <td className={styles.actionCell} colSpan={1}>
               {canChangeRole && (
                 <ChangeOrgButton
                   lockMessage={lockMessage}
